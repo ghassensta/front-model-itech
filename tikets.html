@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Admin dashboard for managing support tickets."
+    />
+    <meta
+      name="keywords"
+      content="admin template, dashboard, tickets, support, responsive"
+    />
+    <meta name="author" content="pixelstrap" />
+    <link
+      rel="icon"
+      href="../../assets/images/favicon.png"
+      type="image/x-icon"
+    />
+    <title>Liste des Tickets | model-itech</title>
+    <!-- Google fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Rubik:400,500,700&family=Roboto:300,400,500,700,900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../assets/css/fontawesome.css"
+    />
+    <!-- Feather icon -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../assets/css/vendors/feather-icon.css"
+    />
+    <!-- Bootstrap css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../assets/css/vendors/bootstrap.css"
+    />
+    <!-- DataTables css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../assets/css/vendors/jquery.dataTables.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../assets/css/vendors/select.bootstrap5.css"
+    />
+    <!-- App css -->
+    <link rel="stylesheet" type="text/css" href="../../assets/css/style.css" />
+    <link
+      id="color"
+      rel="stylesheet"
+      href="../../assets/css/color-1.css"
+      media="screen"
+    />
+    <!-- Responsive css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../assets/css/responsive.css"
+    />
+  </head>
+  <body onload="startTime()">
+    <!-- Loader -->
+    <div class="loader-wrapper">
+      <div class="loader-index"><span></span></div>
+      <svg>
+        <defs></defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="11" result="blur"></feGaussianBlur>
+          <feColorMatrix
+            in="blur"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+            result="goo"
+          ></feColorMatrix>
+        </filter>
+      </svg>
+    </div>
+    <!-- Tap on top -->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- Page wrapper -->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <!-- Page Header -->
+    <!-- Page Header -->
+<div class="page-header">
+  <div class="header-wrapper row m-0">
+    <form class="form-inline search-full col" action="#" method="get">
+      <div class="form-group w-100">
+        <div class="Typeahead Typeahead--twitterUsers">
+          <div class="u-posRelative">
+            <input
+              class="demo-input Typeahead-input form-control-plaintext w-100"
+              type="text"
+              placeholder="Rechercher..."
+              name="q"
+              title=""
+              autofocus
+            />
+            <div class="spinner-border Typeahead-spinner" role="status">
+              <span class="sr-only">Chargement...</span>
+            </div>
+            <i class="close-search" data-feather="x"></i>
+          </div>
+          <div class="Typeahead-menu"></div>
+        </div>
+      </div>
+    </form>
+    <div class="header-logo-wrapper col-auto p-0">
+      <div class="logo-wrapper">
+        <a href="index.html">
+          <img
+            class="img-fluid for-light"
+            src="../../assets/images/logo/logo.png"
+            alt="Logo"
+          />
+          <img
+            class="img-fluid for-dark"
+            src="../../assets/images/logo/logo_dark.png"
+            alt="Logo Dark"
+          />
+        </a>
+      </div>
+      <div class="toggle-sidebar">
+        <i
+          class="status_toggle middle sidebar-toggle"
+          data-feather="align-center"
+        ></i>
+      </div>
+    </div>
+    <div
+      class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto"
+    >
+      <ul class="nav-menus">
+        <li>
+          <span class="header-search">
+            <svg>
+              <use href="../../assets/svg/icon-sprite.svg#search"></use>
+            </svg>
+          </span>
+        </li>
+        <li>
+          <a
+            href="preview.html"
+            target="_blank"
+            class="btn btn-info rounded-pill px-3 py-2"
+            title="Aperçu"
+          >
+            <i class="fa-solid fa-eye me-2"></i>Aperçu
+          </a>
+        </li>
+        <li class="profile-nav onhover-dropdown pe-0 py-0">
+          <div class="d-flex profile-media">
+            <img
+              class="b-r-10"
+              src="../../assets/images/dashboard/profile.png"
+              alt="Profile"
+            />
+            <div class="flex-grow-1">
+              <span>Emay Walter</span>
+              <p class="mb-0">
+                Admin <i class="middle fa-solid fa-angle-down"></i>
+              </p>
+            </div>
+          </div>
+          <ul class="profile-dropdown onhover-show-div">
+            <li>
+              <a href="sign-up.html"
+                ><i data-feather="user"></i><span>Compte</span></a
+              >
+            </li>
+            <li>
+              <a href="login.html"
+                ><i data-feather="log-in"></i><span>Déconnexion</span></a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+      <!-- Page Body -->
+      <div class="page-body-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar-wrapper" data-sidebar-layout="stroke-svg">
+          <div>
+            <div class="logo-wrapper">
+              <a href="index.html">
+                <img
+                  class="img-fluid for-light"
+                  src="../../assets/images/logo/logo.png"
+                  alt=""
+                />
+                <img
+                  class="img-fluid for-dark"
+                  src="../../assets/images/logo/logo_dark.png"
+                  alt=""
+                />
+              </a>
+              <div class="toggle-sidebar">
+                <i
+                  class="status_toggle middle sidebar-toggle"
+                  data-feather="grid"
+                ></i>
+              </div>
+            </div>
+            <nav class="sidebar-main">
+              <div id="sidebar-menu">
+             <ul class="sidebar-links" id="simple-bar">
+                  <li class="sidebar-main-title">
+                    <div><h6>Général</h6></div>
+                  </li>
+                  <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title link-nav" href="/index.html">
+                      <span>Configuration Boutique</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title link-nav" href="./listes-devis-rendezvous.html">
+                      <span>Rendez-vous/Devis</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a
+                      class="sidebar-link sidebar-title link-nav"
+                      href="./calendrier.html"
+                    >
+                      <span>Calendrier</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a
+                      class="sidebar-link sidebar-title link-nav"
+                      href="client-list.html"
+                    >
+                      <span>Client</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a
+                      class="sidebar-link sidebar-title link-nav"
+                      href="integration.html"
+                    >
+                      <span>Integration</span>
+                    </a>
+                  </li>
+                   <li class="sidebar-list">
+                    <a
+                      class="sidebar-link sidebar-title link-nav"
+                      href="tikets.html"
+                    >
+                      <span>Tikets</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a
+                      class="sidebar-link sidebar-title link-nav"
+                      href="parametrage.html"
+                    >
+                      <span>Paramètres</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <!-- Page Content -->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-title">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Liste des Tickets</h3>
+                </div>
+                <div class="col-sm-6">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="index.html">
+                        <svg class="stroke-icon">
+                          <use href="../../assets/svg/icon-sprite.svg#stroke-home"></use>
+                        </svg>
+                      </a>
+                    </li>
+                    <li class="breadcrumb-item">Support Technique</li>
+                    <li class="breadcrumb-item active">Liste des Tickets</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts -->
+          <div class="container-fluid">
+            <div class="card">
+              <div class="card-header">
+                <h5>Liste des Tickets</h5>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#CreateTicket"
+                >
+                  <i class="fa-solid fa-plus me-2"></i>Créer un ticket
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive custom-scrollbar">
+                  <table class="display table-striped" id="ticketsTable">
+                    <thead>
+                      <tr>
+                        <th>#ID</th>
+                        <th>Client</th>
+                        <th>Sujet</th>
+                        <th>Statut</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>T001</td>
+                        <td>John Doe</td>
+                        <td>Problème avec imprimante</td>
+                        <td><span class="badge badge-primary">Ouvert</span></td>
+                        <td>2025-06-01</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>T002</td>
+                        <td>Jane Smith</td>
+                        <td>Erreur logiciel boutique</td>
+                        <td><span class="badge badge-warning">En cours</span></td>
+                        <td>2025-06-02</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>T003</td>
+                        <td>Michael Brown</td>
+                        <td>Demande de formation</td>
+                        <td><span class="badge badge-success">Résolu</span></td>
+                        <td>2025-06-03</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>T004</td>
+                        <td>Emily Johnson</td>
+                        <td>Panne réseau</td>
+                        <td><span class="badge badge-primary">Ouvert</span></td>
+                        <td>2025-06-04</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>T005</td>
+                        <td>David Wilson</td>
+                        <td>Problème de connexion</td>
+                        <td><span class="badge badge-warning">En cours</span></td>
+                        <td>2025-06-05</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>T006</td>
+                        <td>Sophia Lee</td>
+                        <td>Mise à jour logiciel</td>
+                        <td><span class="badge badge-success">Résolu</span></td>
+                        <td>2025-06-06</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>T007</td>
+                        <td>James Martin</td>
+                        <td>Demande de support matériel</td>
+                        <td><span class="badge badge-primary">Ouvert</span></td>
+                        <td>2025-06-07</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>T008</td>
+                        <td>Olivia Clark</td>
+                        <td>Problème d'impression</td>
+                        <td><span class="badge badge-warning">En cours</span></td>
+                        <td>2025-06-08</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>T009</td>
+                        <td>Emma Lewis</td>
+                        <td>Demande de configuration</td>
+                        <td><span class="badge badge-success">Résolu</span></td>
+                        <td>2025-06-09</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>T010</td>
+                        <td>William Walker</td>
+                        <td>Problème de sauvegarde</td>
+                        <td><span class="badge badge-primary">Ouvert</span></td>
+                        <td>2025-06-10</td>
+                        <td>
+                          <ul class="action">
+                            <li class="edit">
+                              <a href="#!"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </li>
+                            <li class="delete">
+                              <a href="#!"><i class="fa-solid fa-trash-can"></i></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- Modal pour créer un ticket -->
+            <div
+              class="modal fade"
+              id="CreateTicket"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="CreateTicketLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="mb-0" id="CreateTicketLabel">Créer un ticket</h5>
+                    <button
+                      class="btn-close"
+                      type="button"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body custom-input">
+                    <form class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label" for="ticketClient">Client</label>
+                        <select class="form-control" id="ticketClient" required>
+                          <option value="">Sélectionnez un client</option>
+                          <option value="John Doe">John Doe</option>
+                          <option value="Jane Smith">Jane Smith</option>
+                          <option value="Michael Brown">Michael Brown</option>
+                          <option value="Emily Johnson">Emily Johnson</option>
+                          <option value="David Wilson">David Wilson</option>
+                          <option value="Sophia Lee">Sophia Lee</option>
+                          <option value="James Martin">James Martin</option>
+                          <option value="Olivia Clark">Olivia Clark</option>
+                          <option value="Emma Lewis">Emma Lewis</option>
+                          <option value="William Walker">William Walker</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="ticketSubject">Sujet</label>
+                        <input
+                          class="form-control"
+                          id="ticketSubject"
+                          type="text"
+                          placeholder="Entrez le sujet du ticket"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-12">
+                        <label class="form-label" for="ticketDescription">Description</label>
+                        <textarea
+                          class="form-control"
+                          id="ticketDescription"
+                          placeholder="Entrez la description du ticket"
+                          rows="4"
+                          required
+                        ></textarea>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="ticketStatus">Statut</label>
+                        <select class="form-control" id="ticketStatus" required>
+                          <option value="Ouvert">Ouvert</option>
+                          <option value="En cours">En cours</option>
+                          <option value="Résolu">Résolu</option>
+                          <option value="Fermé">Fermé</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="ticketDate">Date</label>
+                        <input
+                          class="form-control"
+                          id="ticketDate"
+                          type="date"
+                          value="2025-06-11"
+                          required
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      data-bs-dismiss="modal"
+                    >
+                      Annuler
+                    </button>
+                    <button class="btn btn-primary" type="button" id="saveTicket">
+                      Créer le ticket
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends -->
+        </div>
+        <!-- Footer -->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12 footer-copyright text-center">
+                <p class="mb-0">
+                  Copyright <span class="year-update"></span> © Cuba Theme By Pixelstrap
+                </p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <!-- Scripts -->
+    <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/icons/feather-icon/feather.min.js"></script>
+    <script src="../../assets/js/icons/feather-icon/feather-icon.js"></script>
+    <script src="../../assets/js/scrollbar/simplebar.min.js"></script>
+    <script src="../../assets/js/scrollbar/custom.js"></script>
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/sidebar-menu.js"></script>
+    <script src="../../assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../assets/js/datatable/datatables/dataTables.select.js"></script>
+    <script src="../../assets/js/datatable/datatables/select.bootstrap5.js"></script>
+    <script src="../../assets/js/script.js"></script>
+    <script src="../../assets/js/theme-customizer/customizer.js"></script>
+    <!-- Custom DataTables Initialization -->
+    <script>
+      $(document).ready(function () {
+        // Tickets Table
+        var table = $('#ticketsTable').DataTable({
+          paging: true,
+          searching: true,
+          ordering: true,
+          info: true,
+          responsive: true,
+          pageLength: 10, // 10 entrées par page
+          language: {
+            searchPlaceholder: 'Rechercher...',
+            lengthMenu: 'Afficher _MENU_ entrées',
+            info: 'Affichage de _START_ à _END_ sur _TOTAL_ entrées',
+            paginate: {
+              first: 'Premier',
+              last: 'Dernier',
+              next: 'Suivant',
+              previous: 'Précédent'
+            }
+          },
+          columnDefs: [
+            { orderable: false, targets: 5 } // Désactiver le tri sur la colonne Actions
+          ]
+        });
+
+        // Save ticket
+        $('#saveTicket').on('click', function () {
+          var client = $('#ticketClient').val();
+          var subject = $('#ticketSubject').val();
+          var description = $('#ticketDescription').val();
+          var status = $('#ticketStatus').val();
+          var date = $('#ticketDate').val();
+
+          if (client && subject && description && status && date) {
+            var statusBadge;
+            if (status === 'Ouvert') statusBadge = '<span class="badge badge-primary">Ouvert</span>';
+            else if (status === 'En cours') statusBadge = '<span class="badge badge-warning">En cours</span>';
+            else if (status === 'Résolu') statusBadge = '<span class="badge badge-success">Résolu</span>';
+            else statusBadge = '<span class="badge badge-danger">Fermé</span>';
+
+            var newRow = [
+              'T' + ('00' + (table.rows().count() + 1)).slice(-3), // Génère T011, T012, etc.
+              client,
+              subject,
+              statusBadge,
+              date,
+              '<ul class="action"><li class="edit"><a href="#!"><i class="fa-regular fa-pen-to-square"></i></a></li><li class="delete"><a href="#!"><i class="fa-solid fa-trash-can"></i></a></li></ul>'
+            ];
+
+            table.row.add(newRow).draw();
+            $('#CreateTicket').modal('hide');
+            $('#CreateTicket form')[0].reset();
+          } else {
+            alert('Veuillez remplir tous les champs obligatoires.');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

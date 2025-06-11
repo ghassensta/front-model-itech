@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quel modèle avez-vous ?</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <div
+      id="app"
+      class="w-full max-w-4xl bg-white rounded-xl shadow-xl p-8 space-y-6 relative"
+    >
+      <!-- Titre principal -->
+      <div class="flex items-center justify-between mb-4 relative">
+        <!-- Bouton Retour (visibilité à gauche du titre, alignement vertical) -->
+        <div class="flex items-center gap-2">
+          <button
+            v-if="step > 1"
+            @click="step--"
+            class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-1 shadow-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-all duration-150 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
+            <!-- Icône chevron Left (Heroicons outline) -->
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            <span>Retour</span>
+          </button>
+          <!-- Titre principal -->
+          <h2
+            class="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900 flex items-center gap-2"
+          >
+            <span
+              class="inline-block bg-gradient-to-r from-blue-600 via-purple-500 to-fuchsia-500 bg-clip-text text-transparent"
+              >📱 Quel <span class="font-black">modèle</span></span
+            >
+            avez-vous&nbsp;?
+          </h2>
+        </div>
+
+        <!-- Badge étape -->
+        <span
+          class="hidden sm:inline-block bg-blue-100 text-blue-700 text-xs font-semibold rounded-full px-3 py-1 shadow-sm border border-blue-200 ml-4"
+        >
+          Étape {{step}}&nbsp;/&nbsp;4
+        </span>
+
+        <!-- Bouton aide -->
+        <button
+          @click="showModal = true"
+          class="flex items-center gap-2 text-blue-700 font-semibold text-xs sm:text-sm rounded-lg px-3 py-2 bg-white hover:bg-blue-100 border border-blue-200 shadow hover:shadow-lg transition-all duration-200 ease-in-out active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500 ml-2"
+        >
+          <svg
+            class="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="12" cy="12" r="10" stroke-dasharray="2 2" />
+            <path d="M12 16v-4M12 8h.01" />
+          </svg>
+          Trouvez mon modèle
+        </button>
+      </div>
+      <!-- Badge étape mobile -->
+      <span
+        class="sm:hidden block bg-blue-100 text-blue-700 text-xs font-semibold rounded-full px-3 py-1 shadow-sm border border-blue-200 mb-2 text-right"
+      >
+        Étape {{step}}&nbsp;/&nbsp;4
+      </span>
+
+      <!-- Étape 1 : Choix du type d’appareil -->
+      <div v-if="step === 1">
+        <p class="text-gray-700 text-lg mb-2 font-medium">
+          Choisissez votre <strong>type d’appareil</strong>
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div
+            v-for="device in devices"
+            :key="device.name"
+            @click="selectDevice(device)"
+            class="aspect-square w-full bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col items-center justify-center p-4 transition hover:shadow-lg hover:-translate-y-1 cursor-pointer relative"
+          >
+            <div
+              v-if="loadingDevice === device.name"
+              class="absolute inset-0 bg-white/80 flex items-center justify-center rounded-xl z-10"
+            >
+              <svg
+                class="animate-spin h-6 w-6 text-blue-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+            </div>
+            <img
+              :src="device.icon"
+              alt=""
+              :style="device.style"
+              class="h-10 mb-2"
+            />
+            <p class="text-sm font-medium text-gray-700">{{ device.name }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 2 : Choix de la marque -->
+      <div v-if="step === 2">
+        <p class="text-gray-700 text-lg mb-2 font-medium">
+          Ou sélectionnez votre <strong>marque</strong>
+        </p>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+          <div
+            v-for="brand in filteredBrands"
+            :key="brand.name"
+            @click="selectBrand(brand)"
+            class="aspect-square w-full bg-white rounded-xl border border-gray-200 shadow-sm flex items-center justify-center p-4 transition hover:shadow-lg hover:-translate-y-1 hover:bg-gray-50 cursor-pointer relative"
+          >
+            <div
+              v-if="loadingBrand === brand.name"
+              class="absolute inset-0 bg-white/80 flex items-center justify-center rounded-xl z-10"
+            >
+              <svg
+                class="animate-spin h-6 w-6 text-blue-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+            </div>
+            <img
+              :src="brand.logo"
+              :alt="brand.name"
+              class="h-8 max-w-[60%] object-contain grayscale"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 3 : Choix du modèle -->
+      <div v-if="step === 3">
+        <p class="text-gray-700 text-lg mb-4 font-medium">
+          Sélectionnez votre <strong>modèle</strong>
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4">
+          <div
+            v-for="model in models"
+            :key="model.name"
+            @click="selectModel(model)"
+            class="aspect-square w-full bg-white rounded-xl border border-gray-200 shadow-sm p-3 hover:shadow-lg transition cursor-pointer flex flex-col items-center justify-center relative"
+          >
+            <div
+              v-if="loadingModel === model.name"
+              class="absolute inset-0 bg-white/80 flex items-center justify-center rounded-xl z-10"
+            >
+              <svg
+                class="animate-spin h-6 w-6 text-blue-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+            </div>
+            <img :src="model.image" alt="" class="h-20 mb-2 object-contain" />
+            <div class="text-center">
+              <p class="text-sm font-medium">{{ model.name }}</p>
+              <p class="text-xs text-gray-500">{{ model.code }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 4 : Réparations -->
+      <div v-if="step === 4" class="grid md:grid-cols-3 gap-4">
+        <!-- Colonne gauche : liste des réparations -->
+        <div class="md:col-span-2 space-y-4">
+          <div
+            v-for="repair in repairs"
+            :key="repair.id"
+            @click="toggleRepair(repair)"
+            :class="['cursor-pointer border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition relative',
+      selectedRepairs.find(r => r.id === repair.id) ? 'ring-2 ring-purple-400' : '']"
+          >
+            <div class="flex justify-between items-start">
+              <div>
+                <h4 class="text-sm font-semibold uppercase">
+                  {{ repair.name }}
+                </h4>
+                <p class="text-xs text-gray-600 mt-1">
+                  {{ repair.description }}
+                </p>
+              </div>
+              <div class="text-right">
+                <p class="text-xs text-gray-400">{{ repair.duration }}</p>
+                <div
+                  class="mt-1 px-2 py-0.5 text-xs rounded bg-gray-100 border border-gray-300 inline-block"
+                >
+                  {{ repair.price !== null ? (repair.price.toFixed(2) + ' €') :
+                  'prix à la demande' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne droite : panier -->
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-4">
+          <h3 class="text-sm font-semibold text-gray-800 mb-2">
+            Liste des réparations
+          </h3>
+          <ul class="space-y-2 text-sm">
+            <li
+              v-for="item in selectedRepairs"
+              :key="item.id"
+              class="flex items-center justify-between bg-white rounded-md px-3 py-2 border border-gray-100 shadow-sm hover:bg-purple-50 transition"
+            >
+              <span class="flex-1 font-medium text-gray-700 truncate">
+                {{ item.name }}
+              </span>
+              <span class="mx-3 border-l border-gray-200 h-5"></span>
+              <span class="flex-1 text-right font-semibold text-purple-600">
+                {{ item.price !== null ? (item.price.toFixed(2) + ' €') : 'prix à la demande' }}
+              </span>
+            </li>
+          </ul>
+
+          <hr />
+          <div class="text-sm flex justify-between font-medium">
+            <span>Total</span>
+            <span>{{ total.toFixed(2) }} €</span>
+          </div>
+
+        <button
+  class="w-full mt-2 bg-gray-800 text-white rounded-md py-2 text-sm disabled:opacity-50"
+  :disabled="selectedRepairs.length === 0"
+  @click="step++"
+>
+  Étape Suivante 
+</button>
+
+          <p class="text-xs text-gray-400 text-center mt-1">
+            Vous ne payez qu’une fois la réparation effectuée
+          </p>
+        </div>
+
+        <!-- SECTION RACHAT, SOUS LA GRID, TOUTE LARGEUR -->
+        <div class="md:col-span-3">
+          <div
+            class="bg-blue-50 border border-blue-200 rounded-xl p-4 mt-6 space-y-4 w-full"
+          >
+            <h3
+              class="text-lg font-bold text-blue-800 flex items-center gap-2 mb-2"
+            >
+              <svg
+                class="w-5 h-5 text-blue-600"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
+                />
+              </svg>
+              Rachat de votre téléphone
+            </h3>
+
+            <!-- Choix de l’état -->
+            <div class="flex items-center gap-6 mb-2">
+              <span class="font-medium text-gray-700">État :</span>
+              <div class="flex gap-2">
+                <span
+                  :class="[
+              'px-3 py-1 rounded-full cursor-pointer text-sm font-semibold border transition',
+              etatRachat === 'bon'
+                ? 'bg-blue-600 text-white border-blue-600 shadow'
+                : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-100'
+            ]"
+                  @click="etatRachat = 'bon'"
+                >
+                  Bon état
+                </span>
+                <span
+                  :class="[
+              'px-3 py-1 rounded-full cursor-pointer text-sm font-semibold border transition',
+              etatRachat === 'mauvais'
+                ? 'bg-red-600 text-white border-red-600 shadow'
+                : 'bg-white text-red-700 border-red-200 hover:bg-red-100'
+            ]"
+                  @click="etatRachat = 'mauvais'"
+                >
+                  Mauvais état
+                </span>
+              </div>
+            </div>
+
+            <!-- Pièces incluses -->
+            <div>
+              <span class="block font-medium text-gray-700 mb-1">
+                Pièces incluses :
+              </span>
+              <ul class="flex flex-wrap gap-2 text-xs text-gray-700">
+                <li
+                  class="px-2 py-1 bg-white rounded border border-gray-200"
+                  v-for="piece in pieces"
+                  :key="piece"
+                >
+                  {{ piece }}
+                </li>
+              </ul>
+            </div>
+
+            <!-- Tableau prix par capacité -->
+            <div>
+              <span class="block font-medium text-gray-700 mb-1">
+                Prix de rachat selon la capacité ({{ etatRachat === 'bon' ? 'Bon état' : 'Mauvais état' }}) :
+              </span>
+              <div class="overflow-x-auto">
+                <table
+                  class="min-w-full border bg-white rounded-xl text-sm shadow"
+                >
+                  <thead>
+                    <tr class="bg-blue-100 text-blue-900">
+                      <th class="px-4 py-2 text-left font-semibold">
+                        Capacité
+                      </th>
+                      <th class="px-4 py-2 text-left font-semibold">
+                        Prix (DT)
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="capa in capacites" :key="capa">
+                      <td class="px-4 py-1 font-medium">{{ capa }} Go</td>
+                      <td class="px-4 py-1 text-blue-800 font-bold">
+                        {{ prixRachat[etatRachat][capa] }} DT
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 5 : Coordonnées client et créneau boutique -->
+      <div v-if="step === 5" class="grid md:grid-cols-2 gap-8">
+        <!-- Colonne gauche : Dispo boutique -->
+        <div>
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
+            <h3
+              class="text-lg font-bold text-blue-700 mb-3 flex items-center gap-2"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <rect
+                  x="3"
+                  y="4"
+                  width="18"
+                  height="18"
+                  rx="2"
+                  stroke="currentColor"
+                  stroke-width="2"
+                ></rect>
+                <path
+                  d="M16 2v4M8 2v4M3 10h18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                ></path>
+              </svg>
+              Disponibilité Boutique
+            </h3>
+
+            <!-- Sélecteur de date et heure -->
+            <div class="flex flex-col gap-3 mb-5">
+              <label class="text-sm font-medium text-gray-700"
+                >Date de retrait :</label
+              >
+              <input
+                type="date"
+                v-model="rdvDate"
+                class="border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+              />
+
+              <label class="text-sm font-medium text-gray-700">Heure :</label>
+              <input
+                type="time"
+                v-model="rdvTime"
+                class="border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+              />
+            </div>
+
+            <!-- Créneaux disponibles (exemple statique, tu peux générer dynamiquement) -->
+            <div>
+              <span class="block mb-2 text-sm font-medium text-gray-700"
+                >Créneaux disponibles :</span
+              >
+              <div class="flex flex-wrap gap-2">
+                <button
+                  v-for="slot in dispoSlots"
+                  :key="slot"
+                  @click="selectedSlot = slot"
+                  :class="['px-3 py-1 rounded-md border text-xs font-semibold transition', selectedSlot === slot ? 'bg-blue-600 text-white border-blue-600 shadow' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-100']"
+                >
+                  {{ slot }}
+                </button>
+              </div>
+              <p v-if="selectedSlot" class="mt-2 text-green-700 text-xs">
+                Créneau sélectionné : {{ selectedSlot }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne droite : Formulaire coordonnées client -->
+        <div>
+          <div class="bg-white border border-gray-200 rounded-xl p-6 shadow">
+            <h3 class="text-lg font-bold text-gray-800 mb-3">
+              Coordonnées Client
+            </h3>
+            <form @submit.prevent>
+              <div class="grid grid-cols-1 gap-4">
+                <input
+                  type="text"
+                  v-model="client.nom"
+                  class="border rounded-md px-3 py-2 text-sm"
+                  placeholder="Nom *"
+                  required
+                />
+                <input
+                  type="text"
+                  v-model="client.prenom"
+                  class="border rounded-md px-3 py-2 text-sm"
+                  placeholder="Prénom *"
+                  required
+                />
+                <input
+                  type="tel"
+                  v-model="client.tel"
+                  class="border rounded-md px-3 py-2 text-sm"
+                  placeholder="Téléphone *"
+                  required
+                />
+                <input
+                  type="email"
+                  v-model="client.email"
+                  class="border rounded-md px-3 py-2 text-sm"
+                  placeholder="Email"
+                />
+                <input
+                  type="text"
+                  v-model="client.adresse"
+                  class="border rounded-md px-3 py-2 text-sm"
+                  placeholder="Adresse"
+                />
+                <textarea
+                  v-model="client.notes"
+                  class="border rounded-md px-3 py-2 text-sm"
+                  rows="2"
+                  placeholder="Remarques (facultatif)"
+                ></textarea>
+              </div>
+              <button
+                class="mt-5 w-full bg-blue-700 text-white rounded-md py-2 text-sm font-semibold hover:bg-blue-800 transition"
+                type="submit"
+              >
+                Confirmer mes informations
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal aide corrigée avec section Android et Apple -->
+      <div
+        v-if="showModal"
+        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      >
+        <div class="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative">
+          <button
+            @click="showModal = false"
+            class="absolute top-2 right-3 text-gray-400 hover:text-black text-xl"
+          >
+            &times;
+          </button>
+          <h3 class="text-lg font-semibold mb-4 text-gray-800">
+            📱 Comment trouver votre modèle ?
+          </h3>
+
+          <!-- Section Android -->
+          <div class="mb-4">
+            <h4 class="text-blue-600 font-bold mb-2 flex items-center gap-1">
+              🤖 Android
+            </h4>
+            <ul class="list-disc text-gray-700 space-y-2 pl-5 text-sm">
+              <li>
+                Ouvrez l'application <strong>Paramètres</strong> sur votre
+                téléphone.
+              </li>
+              <li>
+                Allez dans <strong>À propos du téléphone</strong> ou
+                <strong>Informations sur l’appareil</strong>.
+              </li>
+              <li>
+                Recherchez le champ <strong>Nom de l'appareil</strong> ou
+                <strong>Modèle</strong>.
+              </li>
+              <li>
+                Notez le nom exact, ex. : <em>Samsung Galaxy S21</em>,
+                <em>Xiaomi Redmi Note 12</em>, etc.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Section Apple -->
+          <div class="mb-2">
+            <h4 class="text-gray-800 font-bold mb-2 flex items-center gap-1">
+               Apple
+            </h4>
+            <ul class="list-disc text-gray-700 space-y-2 pl-5 text-sm">
+              <li>Ouvrez <strong>Réglages</strong> sur votre iPhone.</li>
+              <li>
+                Allez dans <strong>Général</strong> &rarr;
+                <strong>Informations</strong>.
+              </li>
+              <li>
+                Repérez le champ <strong>Nom du modèle</strong> ou
+                <strong>Numéro du modèle</strong>.
+              </li>
+              <li>
+                Notez le nom exact, ex. : <em>iPhone 13 Pro Max</em>,
+                <em>iPhone SE</em>, etc.
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-5 text-center">
+            <button
+              @click="showModal = false"
+              class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            >
+              J’ai compris 👍
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            step: 1,
+            search: "",
+            showModal: false,
+            loadingDevice: null,
+            loadingBrand: null,
+            loadingModel: null,
+            selectedDevice: null,
+            selectedBrand: null,
+            selectedModel: null,
+            selectedSlot: null,
+
+            rdvDate: "",
+            rdvTime: "",
+            selectedRepairs: [],
+            etatRachat: "bon",
+            pieces: ["Chargeur", "Câble USB", "Boîte"],
+            capacites: [16, 32, 64, 128, 256],
+            prixRachat: {
+              bon: { 16: 180, 32: 210, 64: 250, 128: 300, 256: 400 },
+              mauvais: { 16: 90, 32: 110, 64: 130, 128: 180, 256: 220 },
+            },
+            dispoSlots: ["09:00", "10:30", "12:00", "14:00", "16:00", "18:00"],
+            client: {
+                nom: '',
+                prenom: '',
+                tel: '',
+                email: '',
+                adresse: '',
+                notes: ''
+              },
+            repairs: [
+              {
+                id: 1,
+                name: "ÉCRAN",
+                duration: "30 MINUTES",
+                description:
+                  "L'écran est fissuré ou affiche des lignes anormales.",
+                price: null,
+              },
+              {
+                id: 2,
+                name: "BATTERIE",
+                duration: "30 MINUTES",
+                description: "La batterie se décharge trop vite.",
+                price: null,
+              },
+              {
+                id: 3,
+                name: "CONNECTEUR DE CHARGE",
+                duration: "45 MINUTES",
+                description: "L'appareil ne se charge pas correctement.",
+                price: null,
+              },
+              {
+                id: 4,
+                name: "VITRE ARRIÈRE",
+                duration: "1 HEURE",
+                description: "La vitre arrière est fissurée.",
+                price: null,
+              },
+              {
+                id: 5,
+                name: "CAMÉRA ARRIÈRE",
+                duration: "30 MINUTES",
+                description: "Problème de mise au point ou de flou.",
+                price: null,
+              },
+              {
+                id: 6,
+                name: "VIBREUR",
+                duration: "30 MINUTES",
+                description:
+                  "Le vibreur ne fonctionne pas lors des appels ou notifications.",
+                price: null,
+              },
+              {
+                id: 7,
+                name: "DIAGNOSTIC",
+                duration: "30 MINUTES",
+                description:
+                  "Un diagnostic est nécessaire pour identifier le problème.",
+                price: 9.9,
+              },
+              {
+                id: 8,
+                name: "RÉINITIALISATION",
+                duration: "30 MINUTES",
+                description: "Réinitialisation de l'appareil.",
+                price: 19.99,
+              },
+            ],
+            devices: [
+              {
+                name: "Smartphone",
+                icon: "https://img.icons8.com/ios-filled/50/000000/smartphone.png",
+                style: "",
+              },
+              {
+                name: "Tablette",
+                icon: "https://img.icons8.com/ios-filled/50/000000/ipad.png",
+                style: "transform: rotate(270deg);",
+              },
+              {
+                name: "Ordinateur",
+                icon: "https://img.icons8.com/ios-filled/50/000000/laptop.png",
+                style: "",
+              },
+            ],
+            brands: [
+              { name: "Apple", logo: "https://logo.clearbit.com/apple.com" },
+              {
+                name: "Samsung",
+                logo: "https://logo.clearbit.com/samsung.com",
+              },
+              {
+                name: "Xiaomi",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Xiaomi_logo.svg/512px-Xiaomi_logo.svg.png",
+              },
+              { name: "Google", logo: "https://logo.clearbit.com/google.com" },
+              {
+                name: "Microsoft",
+                logo: "https://logo.clearbit.com/microsoft.com",
+              },
+              {
+                name: "Lenovo",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Lenovo_logo_2015.svg",
+              },
+              {
+                name: "HTC",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Htc_logo.svg/512px-Htc_logo.svg.png",
+              },
+              {
+                name: "CAT",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Caterpillar_logo.svg/512px-Caterpillar_logo.svg.png",
+              },
+              {
+                name: "BlackBerry",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/f/f2/BlackBerry_logo_2013.svg",
+              },
+              {
+                name: "ASUS",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/AsusTek_Computer_Logo.svg/512px-AsusTek_Computer_Logo.svg.png",
+              },
+              {
+                name: "Alcatel",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Alcatel_logo.svg",
+              },
+            ],
+            models: [
+              {
+                name: "Oneplus 10R 150W",
+                code: "N/A",
+                image:
+                  "https://fdn2.gsmarena.com/vv/pics/oneplus/oneplus-10r-1.jpg",
+              },
+              {
+                name: "Oneplus 11",
+                code: "PBH110",
+                image:
+                  "https://fdn2.gsmarena.com/vv/pics/oneplus/oneplus-11.jpg",
+              },
+              {
+                name: "Nord CE 3 Lite",
+                code: "CPH2467",
+                image:
+                  "https://fdn2.gsmarena.com/vv/pics/oneplus/oneplus-nord-ce-3-lite-5g-1.jpg",
+              },
+            ],
+          };
+        },
+        computed: {
+          filteredBrands() {
+            return this.search
+              ? this.brands.filter((b) =>
+                  b.name.toLowerCase().includes(this.search.toLowerCase())
+                )
+              : this.brands;
+          },
+          total() {
+            return this.selectedRepairs.reduce(
+              (acc, curr) => acc + (curr.price || 0),
+              0
+            );
+          },
+        },
+        methods: {
+          selectDevice(device) {
+            this.loadingDevice = device.name;
+            setTimeout(() => {
+              this.selectedDevice = device.name;
+              this.step = 2;
+              this.loadingDevice = null;
+            }, 800);
+          },
+          selectBrand(brand) {
+            this.loadingBrand = brand.name;
+            setTimeout(() => {
+              this.selectedBrand = brand.name;
+              this.step = 3;
+              this.loadingBrand = null;
+            }, 800);
+          },
+          selectModel(model) {
+            this.loadingModel = model.name;
+            setTimeout(() => {
+              this.selectedModel = model;
+              this.step = 4;
+              this.loadingModel = null;
+            }, 800);
+          },
+          toggleRepair(repair) {
+            const index = this.selectedRepairs.findIndex(
+              (r) => r.id === repair.id
+            );
+            if (index > -1) {
+              this.selectedRepairs.splice(index, 1);
+            } else {
+              this.selectedRepairs.push(repair);
+            }
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
