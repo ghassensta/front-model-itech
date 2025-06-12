@@ -453,7 +453,7 @@
                   <div class="row align-items-center">
                     <div class="col-md-10 mb-3 mb-md-0">
                       <label :for="'part-type-' + index" class="form-label">Type de pièce</label>
-                      <input v-model="part.type" :id="'part-type-' + index" type="text" class="form-control" placeholder="Ex: Écran, Batterie" :class="{ 'is-invalid': !part.type.trim() && step === 1 }" />
+                      <input v-model="part.type" :id="'part-type-' + index" type="text" class="form-control" placeholder="original ,compatible" :class="{ 'is-invalid': !part.type.trim() && step === 1 }" />
                       <div v-if="!part.type.trim() && step === 1" class="invalid-feedback">Le type de pièce est requis.</div>
                     </div>
                     <div class="col-md-2 text-center">

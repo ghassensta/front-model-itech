@@ -64,7 +64,11 @@
       <svg>
         <defs></defs>
         <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="11" result="blur"></feGaussianBlur>
+          <feGaussianBlur
+            in="SourceGraphic"
+            stdDeviation="11"
+            result="blur"
+          ></feGaussianBlur>
           <feColorMatrix
             in="blur"
             values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
@@ -78,104 +82,104 @@
     <!-- Page wrapper -->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
       <!-- Page Header -->
- <!-- Page Header -->
-<div class="page-header">
-  <div class="header-wrapper row m-0">
-    <form class="form-inline search-full col" action="#" method="get">
-      <div class="form-group w-100">
-        <div class="Typeahead Typeahead--twitterUsers">
-          <div class="u-posRelative">
-            <input
-              class="demo-input Typeahead-input form-control-plaintext w-100"
-              type="text"
-              placeholder="Rechercher..."
-              name="q"
-              title=""
-              autofocus
-            />
-            <div class="spinner-border Typeahead-spinner" role="status">
-              <span class="sr-only">Chargement...</span>
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="header-wrapper row m-0">
+          <form class="form-inline search-full col" action="#" method="get">
+            <div class="form-group w-100">
+              <div class="Typeahead Typeahead--twitterUsers">
+                <div class="u-posRelative">
+                  <input
+                    class="demo-input Typeahead-input form-control-plaintext w-100"
+                    type="text"
+                    placeholder="Rechercher..."
+                    name="q"
+                    title=""
+                    autofocus
+                  />
+                  <div class="spinner-border Typeahead-spinner" role="status">
+                    <span class="sr-only">Chargement...</span>
+                  </div>
+                  <i class="close-search" data-feather="x"></i>
+                </div>
+                <div class="Typeahead-menu"></div>
+              </div>
             </div>
-            <i class="close-search" data-feather="x"></i>
+          </form>
+          <div class="header-logo-wrapper col-auto p-0">
+            <div class="logo-wrapper">
+              <a href="index.html">
+                <img
+                  class="img-fluid for-light"
+                  src="../../assets/images/logo/logo.png"
+                  alt="Logo"
+                />
+                <img
+                  class="img-fluid for-dark"
+                  src="../../assets/images/logo-dark.png"
+                  alt="Logo Dark"
+                />
+              </a>
+            </div>
+            <div class="toggle-sidebar">
+              <i
+                class="status_toggle middle sidebar-toggle"
+                data-feather="align-center"
+              ></i>
+            </div>
           </div>
-          <div class="Typeahead-menu"></div>
+          <div
+            class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto"
+          >
+            <ul class="nav-menus">
+              <li>
+                <span class="header-search">
+                  <svg>
+                    <use href="../../assets/svg/icon-sprite.svg#search"></use>
+                  </svg>
+                </span>
+              </li>
+              <li>
+                <a
+                  href="./apercu/index.html"
+                  target="_blank"
+                  class="btn btn-info rounded-pill px-3 py-2"
+                  title="Aperçu"
+                >
+                  <i class="fa-solid fa-eye me-2"></i>Aperçu
+                </a>
+              </li>
+              <li class="profile-nav onhover-dropdown pe-0 py-0">
+                <div class="d-flex profile-media">
+                  <img
+                    class="b-r-10"
+                    src="../../assets/images/dashboard/profile.png"
+                    alt="Profile"
+                  />
+                  <div class="flex-grow-1">
+                    <span>Emay Walter</span>
+                    <p class="mb-0">
+                      Admin <i class="middle fa-solid fa-angle-down"></i>
+                    </p>
+                  </div>
+                </div>
+                <ul class="profile-dropdown onhover-show-div">
+                  <li>
+                    <a href="sign-up.html"
+                      ><i data-feather="user"></i><span>Compte</span></a
+                    >
+                  </li>
+                  <li>
+                    <a href="login.html"
+                      ><i data-feather="log-in"></i><span>Déconnexion</span></a
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </form>
-    <div class="header-logo-wrapper col-auto p-0">
-      <div class="logo-wrapper">
-        <a href="index.html">
-          <img
-            class="img-fluid for-light"
-            src="../../assets/images/logo/logo.png"
-            alt="Logo"
-          />
-          <img
-            class="img-fluid for-dark"
-            src="../../assets/images/logo-dark.png"
-            alt="Logo Dark"
-          />
-        </a>
-      </div>
-      <div class="toggle-sidebar">
-        <i
-          class="status_toggle middle sidebar-toggle"
-          data-feather="align-center"
-        ></i>
-      </div>
-    </div>
-    <div
-      class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto"
-    >
-      <ul class="nav-menus">
-        <li>
-          <span class="header-search">
-            <svg>
-              <use href="../../assets/svg/icon-sprite.svg#search"></use>
-            </svg>
-          </span>
-        </li>
-        <li>
-          <a
-            href="preview.html"
-            target="_blank"
-            class="btn btn-info rounded-pill px-3 py-2"
-            title="Aperçu"
-          >
-            <i class="fa-solid fa-eye me-2"></i>Aperçu
-          </a>
-        </li>
-        <li class="profile-nav onhover-dropdown pe-0 py-0">
-          <div class="d-flex profile-media">
-            <img
-              class="b-r-10"
-              src="../../assets/images/dashboard/profile.png"
-              alt="Profile"
-            />
-            <div class="flex-grow-1">
-              <span>Emay Walter</span>
-              <p class="mb-0">
-                Admin <i class="middle fa-solid fa-angle-down"></i>
-              </p>
-            </div>
-          </div>
-          <ul class="profile-dropdown onhover-show-div">
-            <li>
-              <a href="sign-up.html"
-                ><i data-feather="user"></i><span>Compte</span></a
-              >
-            </li>
-            <li>
-              <a href="login.html"
-                ><i data-feather="log-in"></i><span>Déconnexion</span></a
-              >
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
       <!-- Page Body -->
       <div class="page-body-wrapper">
         <!-- Sidebar -->
@@ -194,21 +198,26 @@
                   alt=""
                 />
               </a>
-               
             </div>
             <nav class="sidebar-main">
               <div id="sidebar-menu">
-               <ul class="sidebar-links" id="simple-bar">
+                <ul class="sidebar-links" id="simple-bar">
                   <li class="sidebar-main-title">
                     <div><h6>Général</h6></div>
                   </li>
                   <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title link-nav" href="/index.html">
+                    <a
+                      class="sidebar-link sidebar-title link-nav"
+                      href="/index.html"
+                    >
                       <span>Configuration Boutique</span>
                     </a>
                   </li>
                   <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title link-nav" href="./listes-devis-rendezvous.html">
+                    <a
+                      class="sidebar-link sidebar-title link-nav"
+                      href="./listes-devis-rendezvous.html"
+                    >
                       <span>Rendez-vous/Devis</span>
                     </a>
                   </li>
@@ -236,7 +245,7 @@
                       <span>Integration</span>
                     </a>
                   </li>
-                   <li class="sidebar-list">
+                  <li class="sidebar-list">
                     <a
                       class="sidebar-link sidebar-title link-nav"
                       href="tikets.html"
@@ -261,9 +270,7 @@
         <div class="page-body">
           <div class="container-fluid">
             <div class="page-title">
-              <div class="row">
-              
-              </div>
+              <div class="row"></div>
             </div>
           </div>
           <!-- Container-fluid starts -->
@@ -287,32 +294,7 @@
                       Détails de la boutique
                     </a>
                   </li>
-                  <li class="nav-item" role="presentation">
-                    <a
-                      class="nav-link"
-                      id="appointments-tab"
-                      data-bs-toggle="tab"
-                      href="#appointments"
-                      role="tab"
-                      aria-controls="appointments"
-                      aria-selected="false"
-                    >
-                      Type de Rendez-vous
-                    </a>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <a
-                      class="nav-link"
-                      id="parts-tab"
-                      data-bs-toggle="tab"
-                      href="#parts"
-                      role="tab"
-                      aria-controls="parts"
-                      aria-selected="false"
-                    >
-                      Type de pièces utilisées
-                    </a>
-                  </li>
+
                   <li class="nav-item" role="presentation">
                     <a
                       class="nav-link"
@@ -359,11 +341,7 @@
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Nom boutique</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          value="eco"
-                        />
+                        <input class="form-control" type="text" value="eco" />
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Email</label>
@@ -407,19 +385,11 @@
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Code postal</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          value="5010"
-                        />
+                        <input class="form-control" type="text" value="5010" />
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Remise combiné (€)</label>
-                        <input
-                          class="form-control"
-                          type="number"
-                          value="0"
-                        />
+                        <input class="form-control" type="number" value="0" />
                       </div>
                       <div class="col-md-12">
                         <div class="form-check">
@@ -433,200 +403,297 @@
                           </label>
                         </div>
                       </div>
+
+                      <!-- ... Autres champs précédents ... -->
+
+                      <!-- Couleurs de la boutique -->
+                      <div class="col-md-4">
+                        <label class="form-label">Couleur primaire</label>
+                        <input
+                          class="form-control form-control-color"
+                          type="color"
+                          value="#0d6efd"
+                          title="Choisissez une couleur"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label class="form-label">Couleur secondaire</label>
+                        <input
+                          class="form-control form-control-color"
+                          type="color"
+                          value="#6c757d"
+                          title="Choisissez une couleur"
+                        />
+                      </div>
+
                       <div class="col-12 text-end">
                         <button class="btn btn-success" type="submit">
                           <i class="fa-solid fa-pen-to-square"></i> Modifier
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                  <!-- Type de Rendez-vous -->
-                  <div
-                    class="tab-pane fade"
-                    id="appointments"
-                    role="tabpanel"
-                    aria-labelledby="appointments-tab"
-                  >
-                    <form class="row g-3 mt-3">
-                      <div class="col-md-4">
-                        <label class="form-label">Originale</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          value=""
-                        />
-                      </div>
-                      <div class="col-md-4">
-                        <label class="form-label">Compatible</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          value=""
-                        />
-                      </div>
-                      <div class="col-12 text-end">
-                        <button class="btn btn-success" type="button">
-                          <i class="fa-solid fa-plus"></i> Ajouter
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                  <!-- Type de pièces utilisées -->
-                  <div
-                    class="tab-pane fade"
-                    id="parts"
-                    role="tabpanel"
-                    aria-labelledby="parts-tab"
-                  >
-                    <form class="row g-3 mt-3">
-                      <div class="col-md-4">
-                        <label class="form-label">Type 1</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          value="Original"
-                        />
-                      </div>
-                      <div class="col-md-4">
-                        <label class="form-label">Type 2</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          value="Compatible"
-                        />
-                      </div>
-                      <div class="col-12 text-end">
-                        <button class="btn btn-success" type="button">
-                          <i class="fa-solid fa-plus"></i> Ajouter
-                        </button>
-                        <button class="btn btn-danger" type="button">
-                          <i class="fa-solid fa-trash-can"></i> Supprimer
                         </button>
                       </div>
                     </form>
                   </div>
                   <!-- Horaire d'ouverture -->
                   <div
-                    class="tab-pane fade"
+                    class="tab-pane fade mt-4"
                     id="schedule"
                     role="tabpanel"
                     aria-labelledby="schedule-tab"
                   >
-                    <form class="row g-3 mt-3">
-                      <div class="col-md-2">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="lundi"
-                            id="lundiOui"
-                            value="oui"
-                          />
-                          <label class="form-check-label" for="lundiOui">Oui</label>
+                    <div class="mb-3">
+                      <div class="row">
+                        <!-- Lundi -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                          <div class="card border p-3 rounded">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <label class="form-label">Lundi</label>
+                              <div class="form-check form-switch">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  checked
+                                  disabled
+                                />
+                                <label class="form-check-label">OUI/NON</label>
+                              </div>
+                            </div>
+                            <div class="mt-3">
+                              <div class="d-flex gap-2">
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="09:00"
+                                  readonly
+                                />
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="18:00"
+                                  readonly
+                                />
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="lundi"
-                            id="lundiNon"
-                            value="non"
-                            checked
-                          />
-                          <label class="form-check-label" for="lundiNon">Non</label>
+
+                        <!-- Mardi -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                          <div class="card border p-3 rounded">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <label class="form-label">Mardi</label>
+                              <div class="form-check form-switch">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  checked
+                                  disabled
+                                />
+                                <label class="form-check-label">OUI/NON</label>
+                              </div>
+                            </div>
+                            <div class="mt-3">
+                              <div class="d-flex gap-2">
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="09:00"
+                                  readonly
+                                />
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="18:00"
+                                  readonly
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Mercredi -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                          <div class="card border p-3 rounded">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <label class="form-label">Mercredi</label>
+                              <div class="form-check form-switch">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  checked
+                                  disabled
+                                />
+                                <label class="form-check-label">OUI/NON</label>
+                              </div>
+                            </div>
+                            <div class="mt-3">
+                              <div class="d-flex gap-2">
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="09:00"
+                                  readonly
+                                />
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="18:00"
+                                  readonly
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Jeudi -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                          <div class="card border p-3 rounded">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <label class="form-label">Jeudi</label>
+                              <div class="form-check form-switch">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  checked
+                                  disabled
+                                />
+                                <label class="form-check-label">OUI/NON</label>
+                              </div>
+                            </div>
+                            <div class="mt-3">
+                              <div class="d-flex gap-2">
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="09:00"
+                                  readonly
+                                />
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="18:00"
+                                  readonly
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Vendredi -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                          <div class="card border p-3 rounded">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <label class="form-label">Vendredi</label>
+                              <div class="form-check form-switch">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  checked
+                                  disabled
+                                />
+                                <label class="form-check-label">OUI/NON</label>
+                              </div>
+                            </div>
+                            <div class="mt-3">
+                              <div class="d-flex gap-2">
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="09:00"
+                                  readonly
+                                />
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="18:00"
+                                  readonly
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Samedi -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                          <div class="card border p-3 rounded">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <label class="form-label">Samedi</label>
+                              <div class="form-check form-switch">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  checked
+                                  disabled
+                                />
+                                <label class="form-check-label">OUI/NON</label>
+                              </div>
+                            </div>
+                            <div class="mt-3">
+                              <div class="d-flex gap-2">
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="10:00"
+                                  readonly
+                                />
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="14:00"
+                                  readonly
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Dimanche (fermé) -->
+                        <div class="col-md-4 col-sm-6 mb-4">
+                          <div class="card border p-3 rounded">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <label class="form-label">Dimanche</label>
+                              <div class="form-check form-switch">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  disabled
+                                />
+                                <label class="form-check-label">OUI/NON</label>
+                              </div>
+                            </div>
+                            <div class="mt-3">
+                              <div class="d-flex gap-2">
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="00:00"
+                                  readonly
+                                />
+                                <input
+                                  type="time"
+                                  class="form-control"
+                                  value="00:00"
+                                  readonly
+                                />
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div class="col-md-2">
-                        <label class="form-label">(midi)</label>
-                        <input
-                          class="form-control"
-                          type="time"
-                          value="08:00"
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <input
-                          class="form-control"
-                          type="time"
-                          value="12:00"
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <label class="form-label">(Après-midi)</label>
-                        <input
-                          class="form-control"
-                          type="time"
-                          value="14:00"
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <input
-                          class="form-control"
-                          type="time"
-                          value="18:00"
-                        />
-                      </div>
-                      <!-- Répéter pour chaque jour -->
-                      <div class="col-md-2">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="mardi"
-                            id="mardiOui"
-                            value="oui"
-                          />
-                          <label class="form-check-label" for="mardiOui">Oui</label>
-                        </div>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="mardi"
-                            id="mardiNon"
-                            value="non"
-                            checked
-                          />
-                          <label class="form-check-label" for="mardiNon">Non</label>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <label class="form-label">(midi)</label>
-                        <input
-                          class="form-control"
-                          type="time"
-                          value="08:00"
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <input
-                          class="form-control"
-                          type="time"
-                          value="12:00"
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <label class="form-label">(Après-midi)</label>
-                        <input
-                          class="form-control"
-                          type="time"
-                          value="14:00"
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <input
-                          class="form-control"
-                          type="time"
-                          value="18:00"
-                        />
-                      </div>
-                      <!-- Ajouter les autres jours (Mercredi, Jeudi, Vendredi, Samedi, Dimanche) de manière similaire -->
-                      <div class="col-12 text-end">
-                        <button class="btn btn-success" type="submit">
-                          <i class="fa-solid fa-pen-to-square"></i> Modifier
-                        </button>
-                      </div>
-                    </form>
+                    </div>
                   </div>
                   <!-- Mot de passe -->
                   <div
@@ -638,27 +705,17 @@
                     <form class="row g-3 mt-3">
                       <div class="col-md-4">
                         <label class="form-label">Ancien mot de passe</label>
-                        <input
-                          class="form-control"
-                          type="password"
-                          value=""
-                        />
+                        <input class="form-control" type="password" value="" />
                       </div>
                       <div class="col-md-4">
                         <label class="form-label">Nouveau mot de passe</label>
-                        <input
-                          class="form-control"
-                          type="password"
-                          value=""
-                        />
+                        <input class="form-control" type="password" value="" />
                       </div>
                       <div class="col-md-4">
-                        <label class="form-label">Confirmez le mot de passe</label>
-                        <input
-                          class="form-control"
-                          type="password"
-                          value=""
-                        />
+                        <label class="form-label"
+                          >Confirmez le mot de passe</label
+                        >
+                        <input class="form-control" type="password" value="" />
                       </div>
                       <div class="col-12 text-end">
                         <button class="btn btn-success" type="submit">
@@ -702,34 +759,34 @@
     <script>
       $(document).ready(function () {
         // Validation du mot de passe
-        $('form#password-tab').on('submit', function (e) {
+        $("form#password-tab").on("submit", function (e) {
           e.preventDefault();
           var oldPassword = $('input[name="old_password"]').val();
           var newPassword = $('input[name="new_password"]').val();
           var confirmPassword = $('input[name="confirm_password"]').val();
 
           if (!oldPassword || !newPassword || !confirmPassword) {
-            alert('Veuillez remplir tous les champs.');
+            alert("Veuillez remplir tous les champs.");
             return;
           }
           if (newPassword !== confirmPassword) {
-            alert('Les nouveaux mots de passe ne correspondent pas.');
+            alert("Les nouveaux mots de passe ne correspondent pas.");
             return;
           }
-          alert('Mot de passe changé avec succès !'); // Placeholder pour une API
+          alert("Mot de passe changé avec succès !"); // Placeholder pour une API
           $(this)[0].reset();
         });
 
         // Validation des détails de la boutique
-        $('form#details-tab').on('submit', function (e) {
+        $("form#details-tab").on("submit", function (e) {
           e.preventDefault();
-          alert('Détails de la boutique mis à jour avec succès !'); // Placeholder pour une API
+          alert("Détails de la boutique mis à jour avec succès !"); // Placeholder pour une API
         });
 
         // Validation de l'horaire
-        $('form#schedule-tab').on('submit', function (e) {
+        $("form#schedule-tab").on("submit", function (e) {
           e.preventDefault();
-          alert('Horaire mis à jour avec succès !'); // Placeholder pour une API
+          alert("Horaire mis à jour avec succès !"); // Placeholder pour une API
         });
       });
     </script>
