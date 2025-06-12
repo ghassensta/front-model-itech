@@ -18,7 +18,7 @@
       href="../../assets/images/favicon.png"
       type="image/x-icon"
     />
-    <title>Devis|Rendez-vous model-itech</title>
+    <title>Devis|Rendez-vous model-itech</title> 
     <!-- Google fonts -->
     <link
       href="https://fonts.googleapis.com/css?family=Rubik:400,500,700&family=Roboto:300,400,500,700,900&display=swap"
@@ -242,7 +242,7 @@
           />
           <img
             class="img-fluid for-dark"
-            src="../../assets/images/logo/logo_dark.png"
+            src="../../assets/images/logo-dark.png"
             alt="Logo Dark"
           />
         </a>
@@ -315,21 +315,16 @@
               <a href="index.html">
                 <img
                   class="img-fluid for-light"
-                  src="../../assets/images/logo/logo.png"
+                  src="../../assets/images/logo-dark.png"
                   alt=""
                 />
                 <img
                   class="img-fluid for-dark"
-                  src="../../assets/images/logo/logo_dark.png"
+                  src="../../assets/images/logo-dark.png"
                   alt=""
                 />
               </a>
-              <div class="toggle-sidebar">
-                <i
-                  class="status_toggle middle sidebar-toggle"
-                  data-feather="grid"
-                ></i>
-              </div>
+               
             </div>
             <nav class="sidebar-main">
               <div id="sidebar-menu">
@@ -393,519 +388,307 @@
           </div>
         </div>
         <!-- Page Content -->
-        <div class="page-body">
-          <div class="container configuration-container py-5" id="app">
-            <!-- Mode Selector -->
-            <div v-if="!lockedMode" class="mb-4">
-              <div
-                class="mode-selector-container d-flex justify-content-center"
-              >
-                <div class="form-check form-check-inline mode-option">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="mode-devis"
-                    v-model="selectedMode"
-                    value="Devis"
-                  />
-                  <label class="form-check-label mode-label" for="mode-devis">
-                   </i>Demander un devis
-                  </label>
-                </div>
-                <div class="form-check form-check-inline mode-option">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="mode-rdv"
-                    v-model="selectedMode"
-                    value="Rendez-vous"
-                  />
-                  <label class="form-check-label mode-label" for="mode-rdv">
-                   </i>Prendre rendez-vous
-                  </label>
-                </div>
-              </div>
-            </div>
+<div class="page-body">
+  <div class="container configuration-container py-5" id="app">
+    <!-- Mode Selector -->
+    <div v-if="!lockedMode" class="mb-4">
+      <div class="mode-selector-container d-flex justify-content-center">
+        <div class="form-check form-check-inline mode-option">
+          <input class="form-check-input" type="radio" id="mode-devis" v-model="selectedMode" value="Devis" />
+          <label class="form-check-label mode-label" for="mode-devis">
+            <i class="bi bi-file-earmark-text me-2"></i>Demander un devis
+          </label>
+        </div>
+        <div class="form-check form-check-inline mode-option">
+          <input class="form-check-input" type="radio" id="mode-rdv" v-model="selectedMode" value="Rendez-vous" />
+          <label class="form-check-label mode-label" for="mode-rdv">
+            <i class="bi bi-calendar-event me-2"></i>Prendre rendez-vous
+          </label>
+        </div>
+      </div>
+    </div>
 
-            <!-- Start Button -->
-            <div v-if="selectedMode && !confirmedMode" class="text-center mb-4">
-              <button
-                class="btn btn-primary px-5 py-2 rounded-pill"
-                @click="confirmedMode = true"
-              >
-                </i>Commencer la configuration
-              </button>
-            </div>
+    <!-- Start Button -->
+    <div v-if="selectedMode && !confirmedMode" class="text-center mb-4">
+      <button class="btn btn-primary px-5 py-2 rounded-pill" @click="confirmedMode = true">
+        <i class="bi bi-play-fill me-2"></i>Commencer la configuration
+      </button>
+    </div>
 
-            <!-- Mode Confirmation -->
-            <transition name="fade">
-              <div
-                v-if="confirmedMode && !lockedMode"
-                class="card step-card mb-4 border-0 shadow-sm"
-              >
-                <div class="card-header step-header bg-primary text-white">
-                  <h5 class="mb-0">
-                   Confirmer le mode
-                  </h5>
-                </div>
-                <div class="card-body">
-                  <p class="mb-2">
-                    Vous avez choisi :
-                    <strong class="text-primary">{{ selectedMode }}</strong>
-                  </p>
-                  <p class="mb-0 text-danger">
-                    <i class="bi bi-exclamation-triangle-fill me-1"></i> Ce
-                    choix sera définitif pour cette session.
-                  </p>
-                  <div class="d-flex justify-content-center mt-3">
-                    <button
-                      class="btn btn-success me-3 px-4"
-                      @click="confirmMode"
-                    >
-                      <i class="bi bi-check-lg me-2"></i>Confirmer
-                    </button>
-                    <button
-                      class="btn btn-outline-secondary px-4"
-                      @click="resetMode"
-                    >
-                      <i class="bi bi-x-lg me-2"></i>Annuler
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </transition>
-
-            <!-- Configuration Wizard -->
-            <transition name="fade">
-              <div
-                v-if="lockedMode"
-                class="card step-card mb-4 border-0 shadow-sm"
-              >
-                <div class="card-header step-header bg-primary text-white">
-                  <h5 class="mb-0">
-                    <i class="bi bi-gear me-2"></i>Configuration (Mode : {{
-                    lockedMode }})
-                  </h5>
-                </div>
-                <div class="card-body">
-                  <!-- Progress Bar -->
-                  <div class="progress mb-4" style="height: 8px">
-                    <div
-                      class="progress-bar bg-primary"
-                      role="progressbar"
-                      :style="{ width: (step / (lockedMode === 'Rendez-vous' ? 3 : 3) * 100) + '%' }"
-                      :aria-valuenow="step"
-                      aria-valuemin="1"
-                      :aria-valuemax="lockedMode === 'Rendez-vous' ? 3 : 3"
-                    ></div>
-                  </div>
-
-                  <!-- Step 1: Material -->
-                  <section v-if="step === 1">
-                    <h6 class="text-center mb-4">
-                      <span class="badge bg-primary me-2">1</span> Choisissez le
-                      matériel
-                    </h6>
-                    <div class="row g-4">
-                      <div
-                        class="col-sm-6"
-                        v-for="mat in materials"
-                        :key="mat.id"
-                      >
-                        <div
-                          :class="['card select-card h-100', { selected: selectedMaterial === mat.id }]"
-                          @click="selectMaterial(mat.id)"
-                        >
-                          <div
-                            class="card-img-top overflow-hidden"
-                            style="height: 160px"
-                          >
-                            <img
-                              :src="mat.img"
-                              :alt="mat.label"
-                              class="select-img w-100 h-100"
-                            />
-                          </div>
-                          <div class="card-body text-center">
-                            <strong>{{ mat.label }}</strong>
-                          </div>
-                          <div class="card-footer bg-transparent text-center">
-                            <i class="bi bi-chevron-right text-primary"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-
-                  <!-- Step 2: Brand (Devis) -->
-                  <section v-if="step === 2 && lockedMode === 'Devis'">
-                    <h6 class="text-center mb-4">
-                      <span class="badge bg-primary me-2">2</span> Choisissez la
-                      marque ({{ selectedMaterial }})
-                    </h6>
-                    <div class="row g-4">
-                      <div
-                        class="col-sm-6 col-md-4"
-                        v-for="mar in brandList"
-                        :key="mar"
-                      >
-                        <div
-                          :class="['card select-card h-100', { selected: selectedBrand === mar }]"
-                          @click="selectBrand(mar)"
-                        >
-                          <div
-                            class="card-img-top overflow-hidden"
-                            style="height: 120px"
-                          >
-                            <img
-                              :src="getBrandImg(mar)"
-                              :alt="mar"
-                              class="select-img w-100 h-100 object-fit-contain p-3"
-                            />
-                          </div>
-                          <div class="card-body text-center">
-                            <small class="fw-bold">{{ mar }}</small>
-                          </div>
-                          <div class="card-footer bg-transparent text-center">
-                            <i class="bi bi-chevron-right text-primary"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-center mt-4">
-                      <button
-                        class="btn btn-outline-secondary"
-                        @click="step = 1"
-                      >
-                        <i class="bi bi-arrow-left me-2"></i>Retour
-                      </button>
-                    </div>
-                  </section>
-
-                  <!-- Step 2: Brand & Models (Rendez-vous) -->
-                  <section v-if="step === 2 && lockedMode === 'Rendez-vous'">
-                    <h6 class="text-center mb-4">
-                      <span class="badge bg-primary me-2">2</span> Choisissez la
-                      marque et les modèles ({{ selectedMaterial }})
-                    </h6>
-                    <!-- Brand Selector -->
-                    <div class="brand-selector">
-                      <label for="brand-select" class="form-label"
-                        >Sélectionner une marque :</label
-                      >
-                      <select
-                        id="brand-select"
-                        class="form-select"
-                        v-model="selectedBrand"
-                        @change="updateBrand"
-                      >
-                        <option value="" disabled>
-                          Sélectionnez une marque
-                        </option>
-                        <option
-                          v-for="mar in brandList"
-                          :key="mar"
-                          :value="mar"
-                        >
-                          {{ mar }}
-                        </option>
-                      </select>
-                    </div>
-                    <!-- Models -->
-                    <div v-if="selectedBrand" class="row g-4">
-                      <div
-                        class="col-sm-6 col-md-4 col-lg-3"
-                        v-for="mdl in modelList"
-                        :key="mdl"
-                      >
-                        <div
-                          :class="['card select-card h-100', { selected: modelSelected(mdl) }]"
-                          @click="toggleModel(mdl)"
-                        >
-                          <div
-                            class="card-img-top overflow-hidden"
-                            style="height: 120px"
-                          >
-                            <img
-                              :src="getModelImg(mdl)"
-                              :alt="mdl"
-                              class="select-img w-100 h-100 object-fit-contain p-2"
-                            />
-                          </div>
-                          <div class="card-body text-center">
-                            <div
-                              class="d-flex justify-content-between align-items-center"
-                            >
-                              <small class="fw-bold">{{ mdl }}</small>
-                              <button
-                                v-if="modelSelected(mdl)"
-                                class="btn btn-sm btn-light rounded-circle"
-                                @click.stop="openPriceModal(mdl)"
-                              >
-                                <i
-                                  class="bi bi-currency-dollar text-primary"
-                                ></i>
-                              </button>
-                            </div>
-                            <div
-                              v-if="priceMap[mdl]"
-                              class="small text-success mt-1 fw-bold"
-                            >
-                              {{ priceMap[mdl].toLocaleString('fr-FR', { style:
-                              'currency', currency: 'TND' }) }}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                      <button
-                        class="btn btn-outline-secondary"
-                        @click="step = 1"
-                      >
-                        <i class="bi bi-arrow-left me-2"></i>Retour
-                      </button>
-                      <button
-                        class="btn btn-primary"
-                        :disabled="selectedModels.length === 0 || !allPricesSet"
-                        @click="step = 3"
-                      >
-                        <i class="bi bi-check-lg me-2"></i>Suivant
-                      </button>
-                    </div>
-                  </section>
-
-                  <!-- Step 3: Models (Devis) -->
-                  <section v-if="step === 3 && lockedMode === 'Devis'">
-                    <h6 class="text-center mb-4">
-                      <span class="badge bg-primary me-2">3</span> Choisissez
-                      les modèles ({{ selectedBrand }})
-                    </h6>
-                    <!-- Select All/None -->
-                    <div class="text-center mb-3">
-                      <button
-                        class="btn btn-sm btn-outline-primary me-2"
-                        @click="selectAllModels"
-                      >
-                        <i class="bi bi-check-all me-2"></i>Tout sélectionner
-                      </button>
-                      <button
-                        class="btn btn-sm btn-outline-danger"
-                        @click="clearModels"
-                      >
-                        <i class="bi bi-x-lg me-2"></i>Tout désélectionner
-                      </button>
-                    </div>
-                    <div class="row g-4">
-                      <div
-                        class="col-sm-6 col-md-4 col-lg-3"
-                        v-for="mdl in modelList"
-                        :key="mdl"
-                      >
-                        <div
-                          :class="['card select-card h-100', { selected: modelSelected(mdl) }]"
-                          @click="toggleModel(mdl)"
-                        >
-                          <div
-                            class="card-img-top overflow-hidden"
-                            style="height: 120px"
-                          >
-                            <img
-                              :src="getModelImg(mdl)"
-                              :alt="mdl"
-                              class="select-img w-100 h-100 object-fit-contain p-2"
-                            />
-                          </div>
-                          <div class="card-body text-center">
-                            <small class="fw-bold">{{ mdl }}</small>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                      <button
-                        class="btn btn-outline-secondary"
-                        @click="step = 2"
-                      >
-                        <i class="bi bi-arrow-left me-2"></i>Retour
-                      </button>
-                      <button
-                        class="btn btn-primary"
-                        :disabled="selectedModels.length === 0"
-                        @click="submitConfiguration"
-                      >
-                        <i class="bi bi-check-lg me-2"></i>Terminer
-                      </button>
-                    </div>
-                  </section>
-
-                  <!-- Step 3: Schedule (Rendez-vous) -->
-                  <section v-if="step === 3 && lockedMode === 'Rendez-vous'">
-                    <h6 class="text-center mb-4">
-                      <span class="badge bg-primary me-2">3</span> Planifiez
-                      votre rendez-vous
-                    </h6>
-                    <div class="calendar-placeholder">
-                      <i
-                        class="bi bi-calendar3 mb-2"
-                        style="font-size: 2rem"
-                      ></i>
-                      <p>
-                        Intégration d'un calendrier pour sélectionner une date
-                        et une heure (placeholder).
-                      </p>
-                      <p class="text-muted small">
-                        Cette section peut être connectée à un système de
-                        réservation externe.
-                      </p>
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                      <button
-                        class="btn btn-outline-secondary"
-                        @click="step = 2"
-                      >
-                        <i class="bi bi-arrow-left me-2"></i>Retour
-                      </button>
-                      <button
-                        class="btn btn-primary"
-                        @click="submitConfiguration"
-                      >
-                        <i class="bi bi-check-lg me-2"></i>Terminer
-                      </button>
-                    </div>
-                  </section>
-                </div>
-              </div>
-            </transition>
-
-            <!-- Configuration Result -->
-            <transition name="fade">
-              <div
-                v-if="configurationSubmitted"
-                class="card border-0 shadow-sm"
-              >
-                <div class="card-header bg-success text-white">
-                  <h5 class="mb-0">
-                    <i class="bi bi-check-circle-fill me-2"></i>Configuration
-                    enregistrée !
-                  </h5>
-                </div>
-                <div class="card-body">
-                  <div class="alert alert-light">
-                    <ul class="mb-0">
-                      <li class="mb-2">
-                        <strong>Matériel :</strong>
-                        <span class="badge bg-primary"
-                          >{{ selectedMaterial }}</span
-                        >
-                      </li>
-                      <li class="mb-2">
-                        <strong>Marque :</strong>
-                        <span class="badge bg-primary"
-                          >{{ selectedBrand }}</span
-                        >
-                      </li>
-                      <li class="mb-2">
-                        <strong>Modèles :</strong>
-                        <div class="d-flex flex-wrap gap-2 mt-2">
-                          <span
-                            v-for="m in selectedModels"
-                            :key="m"
-                            class="badge bg-info text-dark"
-                          >
-                            {{ m }}
-                            <span v-if="lockedMode === 'Rendez-vous'">
-                              ({{ priceMap[m].toLocaleString('fr-FR', { style:
-                              'currency', currency: 'TND' }) }})
-                            </span>
-                          </span>
-                        </div>
-                      </li>
-                      <li>
-                        <strong>Mode :</strong>
-                        <span class="badge bg-secondary">{{ lockedMode }}</span>
-                      </li>
-                      <li v-if="lockedMode === 'Rendez-vous'">
-                        <strong>Rendez-vous :</strong>
-                        <span class="badge bg-secondary"
-                          >Planifié (placeholder)</span
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="text-center">
-                    <button
-                      class="btn btn-primary px-4"
-                      @click="resetConfiguration"
-                    >
-                      <i class="bi bi-arrow-repeat me-2"></i>Nouvelle
-                      configuration
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </transition>
-
-            <!-- Price Modal -->
-            <div class="modal fade" id="priceModal" tabindex="-1">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Prix pour {{ modalModel }}</h5>
-                    <button
-                      type="button"
-                      class="btn-close btn-close-white"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text bg-light">Prix</span>
-                      <input
-                        type="number"
-                        class="form-control"
-                        v-model.number="modalPrice"
-                        min="0"
-                        step="0.01"
-                        placeholder="Montant en TND"
-                        :class="{ 'is-invalid': modalPrice < 0 }"
-                      />
-                      <span class="input-group-text bg-light">TND</span>
-                    </div>
-                    <div v-if="modalPrice < 0" class="invalid-feedback">
-                      Le prix ne peut pas être négatif.
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      class="btn btn-outline-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      <i class="bi bi-x-lg me-2"></i>Annuler
-                    </button>
-                    <button
-                      class="btn btn-primary"
-                      @click="savePrice"
-                      :disabled="modalPrice < 0"
-                      data-bs-dismiss="modal"
-                    >
-                      <i class="bi bi-check-lg me-2"></i>Enregistrer
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <!-- Mode Confirmation -->
+    <transition name="fade">
+      <div v-if="confirmedMode && !lockedMode" class="card step-card mb-4 border-0 shadow-sm">
+        <div class="card-header step-header bg-primary text-white">
+          <h5 class="mb-0"><i class="bi bi-check-circle me-2"></i>Confirmer le mode</h5>
+        </div>
+        <div class="card-body">
+          <p class="mb-2">Vous avez choisi : <strong class="text-primary">{{ selectedMode }}</strong></p>
+          <p class="mb-0 text-danger"><i class="bi bi-exclamation-triangle-fill me-1"></i>Ce choix sera définitif pour cette session.</p>
+          <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-success me-3 px-4" @click="confirmMode"><i class="bi bi-check-lg me-2"></i>Confirmer</button>
+            <button class="btn btn-outline-secondary px-4" @click="resetMode"><i class="bi bi-x-lg me-2"></i>Annuler</button>
           </div>
         </div>
+      </div>
+    </transition>
+
+    <!-- Configuration Wizard -->
+    <transition name="fade">
+      <div v-if="lockedMode" class="card step-card mb-4 border-0 shadow-sm">
+        <div class="card-header step-header bg-primary text-white">
+          <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Configuration (Mode : {{ lockedMode }})</h5>
+        </div>
+        <div class="card-body">
+          <!-- Progress Bar -->
+          <div class="progress mb-4" style="height: 8px">
+            <div class="progress-bar bg-primary" role="progressbar" :style="{ width: (step / 3) * 100 + '%' }" :aria-valuenow="step" aria-valuemin="1" aria-valuemax="3"></div>
+          </div>
+
+          <!-- Step 1: Parts and Appointment Type -->
+          <section v-if="step === 1">
+            <h6 class="text-center mb-4"><span class="badge bg-primary me-2">1</span> Spécifiez les pièces</h6>
+            <div class="mb-4">
+              <div v-for="(part, index) in parts" :key="index" class="card mb-3 border-light shadow-sm">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-md-10 mb-3 mb-md-0">
+                      <label :for="'part-type-' + index" class="form-label">Type de pièce</label>
+                      <input v-model="part.type" :id="'part-type-' + index" type="text" class="form-control" placeholder="Ex: Écran, Batterie" :class="{ 'is-invalid': !part.type.trim() && step === 1 }" />
+                      <div v-if="!part.type.trim() && step === 1" class="invalid-feedback">Le type de pièce est requis.</div>
+                    </div>
+                    <div class="col-md-2 text-center">
+                      <button class="btn btn-danger btn-sm mt-3 mt-md-0" @click="removePart(index)" :disabled="parts.length === 1">Supprimer</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-outline-primary w-100" @click="addPart"><i class="bi bi-plus-lg me-2"></i>Ajouter une pièce</button>
+            </div>
+            <!-- Appointment Type for Rendez-vous -->
+            <div v-if="lockedMode === 'Rendez-vous'" class="mb-4">
+              <h6 class="text-center mb-3">Choisissez le type de rendez-vous</h6>
+              <div class="row g-4">
+                <div v-for="type in appointmentTypes" :key="type.id" class="col-md-4">
+                  <div :class="['card select-card h-100', { selected: appointmentType === type.id }]" @click="appointmentType = type.id">
+                    <div class="card-body text-center">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" :id="'appointment-' + type.id" v-model="appointmentType" :value="type.id" />
+                        <label class="form-check-label fw-bold" :for="'appointment-' + type.id">{{ type.label }}</label>
+                      </div>
+                      <p class="small text-muted mt-2">{{ type.description }}</p>
+                      <input type="text" class="form-control form-control-sm mb-2" :value="type.description"  />
+                      <input type="number" class="form-control form-control-sm" :value="type.price"  />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <button class="btn btn-primary px-4" :disabled="!validParts || (lockedMode === 'Rendez-vous' && !appointmentType)" @click="step = 2">
+                <i class="bi bi-check-lg me-2"></i>Suivant
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 2: Material, Brand, and Models (Rendez-vous) or Material (Devis) -->
+          <section v-if="step === 2">
+            <h6 class="text-center mb-4"><span class="badge bg-primary me-2">2</span> Choisissez le matériel</h6>
+            <div class="row g-4 mb-4">
+              <div v-for="mat in materials" :key="mat.id" class="col-sm-6">
+                <div :class="['card select-card h-100', { selected: selectedMaterial === mat.id }]" @click="selectMaterial(mat.id)">
+                  <div class="card-img-top overflow-hidden" style="height: 160px">
+                    <img :src="mat.img" :alt="mat.label" class="select-img w-100 h-100 object-fit-cover" />
+                  </div>
+                  <div class="card-body text-center">
+                    <strong>{{ mat.label }}</strong>
+                  </div>
+                  <div class="card-footer bg-transparent text-center">
+                    <i class="bi bi-chevron-right text-primary"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Brand and Models for Rendez-vous -->
+            <div v-if="lockedMode === 'Rendez-vous' && selectedMaterial" class="mb-4">
+              <h6 class="text-center mb-3">Choisissez la marque et les modèles</h6>
+              <div class="brand-selector mb-3">
+                <label for="brand-select" class="form-label">Sélectionner une marque :</label>
+                <select id="brand-select" class="form-select" v-model="selectedBrand" @change="updateBrand">
+                  <option value="" disabled>Sélectionnez une marque</option>
+                  <option v-for="mar in brandList" :key="mar" :value="mar">{{ mar }}</option>
+                </select>
+              </div>
+              <div v-if="selectedBrand" class="row g-4">
+                <div v-for="mdl in modelList" :key="mdl" class="col-sm-6 col-md-4 col-lg-3">
+                  <div :class="['card select-card h-100', { selected: modelSelected(mdl) }]" @click="toggleModel(mdl)">
+                    <div class="card-img-top overflow-hidden" style="height: 120px">
+                      <img :src="getModelImg(mdl)" :alt="mdl" class="select-img w-100 h-100 object-fit-contain p-2" />
+                    </div>
+                    <div class="card-body text-center">
+                      <small class="fw-bold">{{ mdl }}</small>
+                      <div v-if="priceMap[mdl]" class="small text-success mt-1 fw-bold">
+                        {{ priceMap[mdl].toLocaleString('fr-FR', { style: 'currency', currency: 'TND' }) }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+              <button class="btn btn-outline-secondary px-4" @click="step = 1"><i class="bi bi-arrow-left me-2"></i>Retour</button>
+              <button v-if="lockedMode === 'Devis'" class="btn btn-primary px-4" :disabled="!selectedMaterial" @click="step = 3">
+                <i class="bi bi-check-lg me-2"></i>Suivant
+              </button>
+              <button v-if="lockedMode === 'Rendez-vous'" class="btn btn-primary px-4" :disabled="!selectedMaterial || !selectedBrand || selectedModels.length === 0 || !allPricesSet" @click="step = 3">
+                <i class="bi bi-check-lg me-2"></i>Suivant
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 3: Brands (Devis) -->
+          <section v-if="step === 3 && lockedMode === 'Devis'">
+            <h6 class="text-center mb-4"><span class="badge bg-primary me-2">3</span> Choisissez les marques ({{ selectedMaterial }})</h6>
+            <div class="row g-4">
+              <div v-for="mar in brandList" :key="mar" class="col-sm-6 col-md-4">
+                <div :class="['card select-card h-100', { selected: selectedBrands.includes(mar) }]" @click="toggleBrand(mar)">
+                  <div class="card-img-top overflow-hidden" style="height: 120px">
+                    <img :src="getBrandImg(mar)" :alt="mar" class="select-img w-100 h-100 object-fit-contain p-3" />
+                  </div>
+                  <div class="card-body text-center">
+                    <small class="fw-bold">{{ mar }}</small>
+                  </div>
+                  <div class="card-footer bg-transparent text-center">
+                    <i v-if="selectedBrands.includes(mar)" class="bi bi-check-circle text-primary"></i>
+                    <i v-else class="bi bi-chevron-right text-primary"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+              <button class="btn btn-outline-secondary px-4" @click="step = 2"><i class="bi bi-arrow-left me-2"></i>Retour</button>
+              <button class="btn btn-primary px-4" :disabled="selectedBrands.length === 0" @click="submitConfiguration">
+                <i class="bi bi-check-lg me-2"></i>Terminer
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 3: Model Selection via Modal (Rendez-vous) -->
+          <section v-if="step === 3 && lockedMode === 'Rendez-vous'">
+            <h6 class="text-center mb-4"><span class="badge bg-primary me-2">3</span> Confirmez les modèles</h6>
+            <div class="text-center mb-4">
+              <p>Sélectionnez ou modifiez les modèles via la fenêtre modale.</p>
+              <button class="btn btn-primary" @click="openPriceModal(selectedModels[0] || modelList[0])">
+                <i class="bi bi-pencil-square me-2"></i>Modifier les modèles
+              </button>
+            </div>
+            <div class="row g-4">
+              <div v-for="mdl in selectedModels" :key="mdl" class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card select-card h-100">
+                  <div class="card-img-top overflow-hidden" style="height: 120px">
+                    <img :src="getModelImg(mdl)" :alt="mdl" class="select-img w-100 h-100 object-fit-contain p-2" />
+                  </div>
+                  <div class="card-body text-center">
+                    <small class="fw-bold">{{ mdl }}</small>
+                    <div class="small text-success mt-1 fw-bold">
+                      {{ priceMap[mdl].toLocaleString('fr-FR', { style: 'currency', currency: 'TND' }) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+              <button class="btn btn-outline-secondary px-4" @click="step = 2"><i class="bi bi-arrow-left me-2"></i>Retour</button>
+              <button class="btn btn-primary px-4" :disabled="selectedModels.length === 0 || !allPricesSet" @click="submitConfiguration">
+                <i class="bi bi-check-lg me-2"></i>Terminer
+              </button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </transition>
+
+    <!-- Configuration Result -->
+    <transition name="fade">
+      <div v-if="configurationSubmitted" class="card border-0 shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="bi bi-check-circle-fill me-2"></i>Configuration enregistrée !</h5>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-light">
+            <ul class="mb-0">
+              <li class="mb-2"><strong>Pièces :</strong>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                  <span v-for="part in parts" :key="part.type" class="badge bg-info text-dark">{{ part.type }}</span>
+                </div>
+              </li>
+              <li class="mb-2"><strong>Matériel :</strong> <span class="badge bg-primary">{{ selectedMaterial }}</span></li>
+              <li class="mb-2" v-if="lockedMode === 'Devis'">
+                <strong>Marques :</strong>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                  <span v-for="mar in selectedBrands" :key="mar" class="badge bg-info text-dark">{{ mar }}</span>
+                </div>
+              </li>
+              <li class="mb-2" v-if="lockedMode === 'Rendez-vous'">
+                <strong>Marque :</strong> <span class="badge bg-primary">{{ selectedBrand }}</span>
+              </li>
+              <li class="mb-2" v-if="lockedMode === 'Rendez-vous'">
+                <strong>Modèles :</strong>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                  <span v-for="m in selectedModels" :key="m" class="badge bg-info text-dark">
+                    {{ m }} ({{ priceMap[m].toLocaleString('fr-FR', { style: 'currency', currency: 'TND' }) }})
+                  </span>
+                </div>
+              </li>
+              <li v-if="lockedMode === 'Rendez-vous'">
+                <strong>Type de rendez-vous :</strong>
+                <span class="badge bg-secondary">
+                  {{ appointmentTypes.find(t => t.id === appointmentType)?.label }}
+                  ({{ appointmentTypes.find(t => t.id === appointmentType)?.price.toLocaleString('fr-FR', { style: 'currency', currency: 'TND' }) }})
+                </span>
+              </li>
+              <li><strong>Mode :</strong> <span class="badge bg-secondary">{{ lockedMode }}</span></li>
+            </ul>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary px-4" @click="resetConfiguration"><i class="bi bi-arrow-repeat me-2"></i>Nouvelle configuration</button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <!-- Price Modal -->
+    <div class="modal fade" id="priceModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">Prix pour {{ modalModel }}</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <span class="input-group-text bg-light">Prix</span>
+              <input type="number" class="form-control" v-model.number="modalPrice" min="0" step="0.01" placeholder="Montant en TND" :class="{ 'is-invalid': modalPrice < 0 }" />
+              <span class="input-group-text bg-light">TND</span>
+            </div>
+            <div v-if="modalPrice < 0" class="invalid-feedback">Le prix ne peut pas être négatif.</div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="bi bi-x-lg me-2"></i>Annuler</button>
+            <button class="btn btn-primary" @click="savePrice" :disabled="modalPrice < 0"><i class="bi bi-check-lg me-2"></i>Enregistrer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
         <!-- Footer -->
         <footer class="footer">
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-12 footer-copyright text-center">
                 <p class="mb-0">
-                  Copyright <span class="year-update"></span> © Cuba Theme By
-                  Pixelstrap
+                  Copyright <span class="year-update"></span> Model-itech
                 </p>
               </div>
             </div>
@@ -982,157 +765,200 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 
-    <script>
-      const { createApp } = Vue;
+<script>
+const { createApp } = Vue;
 
-      createApp({
-        data() {
-          return {
-            // Mode
-            selectedMode: "Devis",
-            confirmedMode: false,
-            lockedMode: null,
-            // Wizard
-            step: 1,
-            selectedMaterial: null,
-            selectedBrand: null,
-            selectedModels: [],
-            priceMap: {},
-            configurationSubmitted: false,
-            // Modal
-            modalModel: null,
-            modalPrice: 0,
-            // Data
-            materials: [
-              {
-                id: "Smartphone",
-                label: "Smartphone",
-                img: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
-              },
-              {
-                id: "Tablette",
-                label: "Tablette",
-                img: "https://images.unsplash.com/photo-1544244015-8e692ed3b714?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
-              },
-            ],
-            brandsDict: {
-              Smartphone: ["Apple", "Samsung", "Xiaomi"],
-              Tablette: ["Apple", "Samsung", "Microsoft"],
-            },
-            modelsDict: {
-              Apple: ["iPhone 14", "iPhone 13", "iPad Pro", "iPad Air"],
-              Samsung: ["Galaxy S23", "Galaxy S22", "Galaxy Tab S9"],
-              Xiaomi: ["Xiaomi 13", "Redmi Note 12"],
-              Microsoft: ["Surface Pro 9", "Surface Go 3"],
-            },
-          };
+createApp({
+  data() {
+    return {
+      // Mode
+      selectedMode: "Devis",
+      confirmedMode: false,
+      lockedMode: null,
+      // Wizard
+      step: 1,
+      parts: [{ type: "" }], // Repeatable parts form
+      appointmentType: null, // For Rendez-vous mode
+      selectedMaterial: null,
+      selectedBrands: [], // Multiple brands for Devis
+      selectedBrand: null, // Single brand for Rendez-vous
+      selectedModels: [],
+      priceMap: {},
+      configurationSubmitted: false,
+      // Modal
+      modalModel: null,
+      modalPrice: 0,
+      // Data
+      materials: [
+        {
+          id: "Smartphone",
+          label: "Smartphone",
+          img: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
         },
-        computed: {
-          brandList() {
-            return this.brandsDict[this.selectedMaterial] || [];
-          },
-          modelList() {
-            return this.modelsDict[this.selectedBrand] || [];
-          },
-          allPricesSet() {
-            return this.selectedModels.every(
-              (model) => this.priceMap[model] >= 0
-            );
-          },
+        {
+          id: "Tablette",
+          label: "Tablette",
+          img: "https://images.unsplash.com/photo-1544244015-8e692ed3b714?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
         },
-        methods: {
-          // Mode Management
-          confirmMode() {
-            this.lockedMode = this.selectedMode;
-            this.confirmedMode = false;
-          },
-          resetMode() {
-            this.selectedMode = "Devis";
-            this.confirmedMode = false;
-          },
-          // Wizard Management
-          selectMaterial(mat) {
-            this.selectedMaterial = mat;
-            this.selectedBrand = null;
-            this.selectedModels = [];
-            this.priceMap = {};
-            this.step = 2;
-          },
-          selectBrand(brand) {
-            this.selectedBrand = brand;
-            this.selectedModels = [];
-            this.priceMap = {};
-            if (this.lockedMode === "Devis") {
-              this.step = 3;
-              this.selectedModels = [...this.modelList];
-            }
-          },
-          updateBrand() {
-            this.selectedModels = [];
-            this.priceMap = {};
-          },
-          modelSelected(model) {
-            return this.selectedModels.includes(model);
-          },
-          toggleModel(model) {
-            const idx = this.selectedModels.indexOf(model);
-            if (idx > -1) {
-              this.selectedModels.splice(idx, 1);
-              delete this.priceMap[model];
-            } else {
-              this.selectedModels.push(model);
-              if (this.lockedMode === "Rendez-vous") {
-                this.openPriceModal(model);
-              }
-            }
-          },
-          selectAllModels() {
-            this.selectedModels = [...this.modelList];
-          },
-          clearModels() {
-            this.selectedModels = [];
-            this.priceMap = {};
-          },
-          submitConfiguration() {
-            this.configurationSubmitted = true;
-          },
-          resetConfiguration() {
-            this.step = 1;
-            this.selectedMaterial = null;
-            this.selectedBrand = null;
-            this.selectedModels = [];
-            this.priceMap = {};
-            this.configurationSubmitted = false;
-            this.lockedMode = null;
-            this.selectedMode = "Devis";
-          },
-          // Price Modal
-          openPriceModal(model) {
-            this.modalModel = model;
-            this.modalPrice = this.priceMap[model] || 0;
-            new bootstrap.Modal(document.getElementById("priceModal")).show();
-          },
-          savePrice() {
-            if (this.modalPrice >= 0) {
-              this.priceMap[this.modalModel] = this.modalPrice;
-              bootstrap.Modal.getInstance(
-                document.getElementById("priceModal")
-              ).hide();
-            }
-          },
-          // Image URLs
-          getBrandImg(brand) {
-            return `https://images.unsplash.com/photo-1505156868547-9b49f4df4e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=220&q=80&text=${encodeURIComponent(
-              brand
-            )}`;
-          },
-          getModelImg(model) {
-            return `https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=220&q=80&text=${encodeURIComponent(
-              model.split(" ")[0]
-            )}`;
-          },
+      ],
+      brandsDict: {
+        Smartphone: ["Apple", "Samsung", "Xiaomi"],
+        Tablette: ["Apple", "Samsung", "Microsoft"],
+      },
+      modelsDict: {
+        Apple: ["iPhone 14", "iPhone 13", "iPad Pro", "iPad Air"],
+        Samsung: ["Galaxy S23", "Galaxy S22", "Galaxy Tab S9"],
+        Xiaomi: ["Xiaomi 13", "Redmi Note 12"],
+        Microsoft: ["Surface Pro 9", "Surface Go 3"],
+      },
+      appointmentTypes: [
+        {
+          id: "in_store",
+          label: "Réparation en magasin",
+          description: "Votre appareil réparé en 30 minutes sur place !",
+          price: 1000,
         },
-      }).mount("#app");
-    </script>
+        {
+          id: "home_work",
+          label: "Réparation à domicile ou au travail",
+          description: "Intervention en moins d'une heure dans toute l'Île-de-France !",
+          price: 600,
+        },
+        {
+          id: "by_mail",
+          label: "Réparation par correspondance",
+          description: "Intervention rapide par voie de correspondance",
+          price: 900,
+        },
+      ],
+    };
+  },
+  computed: {
+    brandList() {
+      return this.brandsDict[this.selectedMaterial] || [];
+    },
+    modelList() {
+      return this.modelsDict[this.selectedBrand] || [];
+    },
+    allPricesSet() {
+      return this.selectedModels.every((model) => this.priceMap[model] >= 0);
+    },
+    validParts() {
+      return this.parts.every((part) => part.type.trim());
+    },
+  },
+  methods: {
+    // Mode Management
+    confirmMode() {
+      this.lockedMode = this.selectedMode;
+      this.confirmedMode = false;
+    },
+    resetMode() {
+      this.selectedMode = "Devis";
+      this.confirmedMode = false;
+      this.resetConfiguration();
+    },
+    // Parts Form Management
+    addPart() {
+      this.parts.push({ type: "" });
+    },
+    removePart(index) {
+      if (this.parts.length > 1) {
+        this.parts.splice(index, 1);
+      }
+    },
+    // Wizard Management
+    selectMaterial(mat) {
+      this.selectedMaterial = mat;
+      this.selectedBrands = [];
+      this.selectedBrand = null;
+      this.selectedModels = [];
+      this.priceMap = {};
+      this.step = 2;
+    },
+    toggleBrand(brand) {
+      const idx = this.selectedBrands.indexOf(brand);
+      if (idx > -1) {
+        this.selectedBrands.splice(idx, 1);
+      } else {
+        this.selectedBrands.push(brand);
+      }
+    },
+    selectBrand(brand) {
+      this.selectedBrand = brand;
+      this.selectedModels = [];
+      this.priceMap = {};
+    },
+    updateBrand() {
+      this.selectedModels = [];
+      this.priceMap = {};
+    },
+    modelSelected(model) {
+      return this.selectedModels.includes(model);
+    },
+    toggleModel(model) {
+      const idx = this.selectedModels.indexOf(model);
+      if (idx > -1) {
+        this.selectedModels.splice(idx, 1);
+        delete this.priceMap[model];
+      } else {
+        this.selectedModels.push(model);
+        if (this.lockedMode === "Rendez-vous") {
+          this.openPriceModal(model);
+        }
+      }
+    },
+    selectAllModels() {
+      this.selectedModels = [...this.modelList];
+      if (this.lockedMode === "Rendez-vous") {
+        this.modelList.forEach((model) => {
+          if (!this.priceMap[model]) {
+            this.openPriceModal(model);
+          }
+        });
+      }
+    },
+    clearModels() {
+      this.selectedModels = [];
+      this.priceMap = {};
+    },
+    submitConfiguration() {
+      this.configurationSubmitted = true;
+    },
+    resetConfiguration() {
+      this.step = 1;
+      this.parts = [{ type: "" }];
+      this.appointmentType = null;
+      this.selectedMaterial = null;
+      this.selectedBrands = [];
+      this.selectedBrand = null;
+      this.selectedModels = [];
+      this.priceMap = {};
+      this.configurationSubmitted = false;
+      this.lockedMode = null;
+      this.selectedMode = "Devis";
+    },
+    // Price Modal
+    openPriceModal(model) {
+      this.modalModel = model;
+      this.modalPrice = this.priceMap[model] || 0;
+      new bootstrap.Modal(document.getElementById("priceModal")).show();
+    },
+    savePrice() {
+      if (this.modalPrice >= 0) {
+        this.priceMap[this.modalModel] = this.modalPrice;
+        bootstrap.Modal.getInstance(document.getElementById("priceModal")).hide();
+      }
+    },
+    // Image URLs
+    getBrandImg(brand) {
+      return `https://images.unsplash.com/photo-1505156868547-9b49f4df4e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=220&q=80&text=${encodeURIComponent(brand)}`;
+    },
+    getModelImg(model) {
+      return `https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=220&q=80&text=${encodeURIComponent(model.split(" ")[0])}`;
+    },
+  },
+}).mount("#app");
+</script>
   </body>
 </html>
